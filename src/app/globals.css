@@ -1,0 +1,144 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dashboard-bg: #f6f8fb;
+  --dashboard-primary: #1f2937;
+  --dashboard-secondary: #6b7280;
+  --dashboard-border: #e5e7eb;
+}
+
+@layer base {
+  html {
+    height: 100%;
+    background-color: var(--dashboard-bg);
+  }
+
+  body {
+    min-height: 100%;
+    background-color: var(--dashboard-bg);
+    color: var(--dashboard-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+  }
+}
+
+.globe-legend-dot--low {
+  background-color: #f97316;
+}
+
+.globe-legend-dot--medium {
+  background-color: #84cc16;
+}
+
+.globe-legend-dot--high {
+  background-color: #15803d;
+}
+
+.analytics-chart-block .recharts-wrapper,
+.analytics-chart-block .recharts-surface,
+.analytics-chart-block .recharts-responsive-container {
+  margin-bottom: 0 !important;
+}
+
+/* KPI mini charts: Recharts ships with a white canvas */
+.kpi-chart-area .recharts-wrapper,
+.kpi-chart-area .recharts-surface,
+.kpi-chart-area .recharts-responsive-container {
+  background-color: transparent !important;
+}
+
+.google-style-map {
+  background: #e8f0f8;
+  z-index: 0;
+}
+
+.google-style-map .leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18) !important;
+}
+
+.google-style-map .leaflet-control-zoom a {
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  color: #5f6368 !important;
+  background: #fff !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.google-style-map .leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+.google-map-marker {
+  position: relative;
+  width: calc(var(--marker-size) * 2.8);
+  height: calc(var(--marker-size) * 2.8);
+}
+
+.google-map-marker__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--marker-color);
+  opacity: 0.22;
+}
+
+.google-map-marker__dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--marker-size);
+  height: var(--marker-size);
+  border: 2px solid #fff;
+  border-radius: 9999px;
+  background: var(--marker-color);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+  transform: translate(-50%, -50%);
+}
+
+.google-map-volume-label {
+  padding: 2px 6px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  background: rgba(32, 33, 36, 0.88) !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.google-map-volume-label::before {
+  border-top-color: rgba(32, 33, 36, 0.88) !important;
+}
+
+/* Google Maps 3D globe — blue sky gradient background */
+.google-globe-view {
+  background: linear-gradient(180deg, #3d7cb5 0%, #5a9fd4 42%, #7eb8e3 100%);
+}
+
+.google-globe-view canvas {
+  filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.12));
+}
