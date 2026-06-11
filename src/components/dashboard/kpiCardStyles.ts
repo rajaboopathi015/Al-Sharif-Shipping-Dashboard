@@ -1,5 +1,5 @@
 export const kpiCardShell =
-  "animate-fade-lift flex h-[118px] overflow-hidden rounded-[10px] shadow-card";
+  "animate-fade-lift flex h-[118px] overflow-hidden rounded-card shadow-card";
 
 export const kpiLeftCol =
   "flex w-[42%] shrink-0 flex-col justify-between p-3 pr-1.5";

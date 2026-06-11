@@ -20,6 +20,7 @@ import {
   GLOBE_WATER_LABELS,
   createEquatorPath,
 } from "@/lib/globeConfig";
+import { createGlobeSkyTexture, GLOBE_SKY_COLOR } from "@/lib/globeSkyBackground";
 import { intensityColor } from "@/lib/mockData";
 import type { GlobePoint } from "@/lib/types";
 
@@ -123,6 +124,13 @@ export function GlobeVisualization({
     return () => controls.removeEventListener("change", syncAltitude);
   }, [rotationEnabled, dims.width]);
 
+  useEffect(() => {
+    if (dims.width > 0 && dims.height > 0) {
+      applySkyBackground();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- reapply after resize remount
+  }, [dims.width, dims.height]);
+
   const labelsData = useMemo(() => {
     const volumeLabels = showVolume
       ? points.map((p) => ({
@@ -155,18 +163,27 @@ export function GlobeVisualization({
     return [...oceanLabels, ...nameLabels, ...volumeLabels];
   }, [cameraAltitude, countryLabels, points, showVolume]);
 
+  const applySkyBackground = () => {
+    const globe = globeRef.current;
+    if (!globe) return;
+
+    const scene = globe.scene();
+    scene.background = createGlobeSkyTexture();
+  };
+
   return (
     <div
       ref={containerRef}
-      className={`google-globe-view relative h-full min-h-0 w-full overflow-hidden rounded-xl ${className}`}
+      className={`google-globe-view min-h-0 w-full overflow-hidden rounded ${className}`}
     >
       {dims.width > 0 && dims.height > 0 && (
         <Globe
           ref={globeRef}
           width={dims.width}
           height={dims.height}
+          onGlobeReady={applySkyBackground}
           globeImageUrl={GLOBE_EARTH_TEXTURE}
-          backgroundColor="rgba(0,0,0,0)"
+          backgroundColor={GLOBE_SKY_COLOR}
           polygonsData={countries}
           polygonCapColor={() => "rgba(0, 0, 0, 0)"}
           polygonSideColor={() => "rgba(0, 0, 0, 0)"}

@@ -5,7 +5,6 @@ import {
   CartesianGrid,
   ComposedChart,
   Line,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -13,8 +12,8 @@ import {
 import { useFilters } from "@/context/FilterContext";
 import { lineWiseData } from "@/lib/mockData";
 import { ChartCard } from "../ui/ChartCard";
+import { ResponsiveChartContainer } from "../ui/ResponsiveChartContainer";
 import {
-  ANALYTICS_CHART_HEIGHT,
   analyticsChartMargin,
   analyticsLeftYAxisLabel,
   analyticsRightYAxisLabel,
@@ -25,7 +24,7 @@ import {
 } from "./analyticsLayout";
 
 const tooltipStyle = {
-  borderRadius: 10,
+  borderRadius: 4,
   border: "1px solid #E5E7EB",
   boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
   fontSize: 11,
@@ -67,7 +66,7 @@ export function LineWiseChart() {
   return (
     <ChartCard title="Linewise Comparison - 20 ft, 40ft, TEU" compact showToolbar delay={380} className="!pb-2">
       <div className="analytics-chart-block">
-        <ResponsiveContainer width="100%" height={ANALYTICS_CHART_HEIGHT}>
+        <ResponsiveChartContainer size="analytics">
           <ComposedChart data={data} margin={analyticsChartMargin} barGap={0} barCategoryGap="22%">
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
             <XAxis
@@ -124,7 +123,7 @@ export function LineWiseChart() {
               dot={{ r: 2, fill: "#F97316" }}
             />
           </ComposedChart>
-        </ResponsiveContainer>
+        </ResponsiveChartContainer>
         <LineWiseLegend />
       </div>
     </ChartCard>

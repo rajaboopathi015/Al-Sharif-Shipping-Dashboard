@@ -4,7 +4,6 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -13,6 +12,7 @@ import { useFilters } from "@/context/FilterContext";
 import { fiveYearData } from "@/lib/mockData";
 import { AnalyticsChartToolbar } from "../ui/AnalyticsChartToolbar";
 import { ChartCard } from "../ui/ChartCard";
+import { ResponsiveChartContainer } from "../ui/ResponsiveChartContainer";
 import {
   analyticsChartMargin,
   analyticsLeftYAxisLabel,
@@ -24,13 +24,11 @@ import {
 } from "./analyticsLayout";
 
 const tooltipStyle = {
-  borderRadius: 10,
+  borderRadius: 4,
   border: "1px solid #E5E7EB",
   boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
   fontSize: 11,
 };
-
-const CHART_PLOT_HEIGHT = 194;
 
 const BAR_RADIUS: [number, number, number, number] = [1, 1, 0, 0];
 
@@ -79,7 +77,7 @@ export function FiveYearChart() {
       className="!pb-2"
     >
       <div className="analytics-chart-block">
-        <ResponsiveContainer width="100%" height={CHART_PLOT_HEIGHT}>
+        <ResponsiveChartContainer size="analytics">
           <BarChart data={data} barGap={0} barCategoryGap="32%" margin={analyticsChartMargin}>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
             <XAxis
@@ -146,7 +144,7 @@ export function FiveYearChart() {
               barSize={10}
             />
           </BarChart>
-        </ResponsiveContainer>
+        </ResponsiveChartContainer>
         <FiveYearLegend />
       </div>
     </ChartCard>

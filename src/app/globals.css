@@ -1,5 +1,3 @@
-@import "leaflet/dist/leaflet.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +7,12 @@
   --dashboard-primary: #1f2937;
   --dashboard-secondary: #6b7280;
   --dashboard-border: #e5e7eb;
+  --chart-plot-analytics: clamp(168px, 20vh, 220px);
+  --chart-plot-sm: clamp(220px, 26vh, 300px);
+  --chart-plot-md: clamp(260px, 32vh, 380px);
+  --chart-plot-lg: clamp(280px, 36vh, 420px);
+  --layout-margin: 10px;
+  --layout-padding: 8px;
 }
 
 @layer base {
@@ -19,10 +23,68 @@
 
   body {
     min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
     background-color: var(--dashboard-bg);
     color: var(--dashboard-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.dashboard-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.chart-plot {
+  width: 100%;
+  min-width: 0;
+  min-height: 200px;
+}
+
+.chart-plot--analytics {
+  height: var(--chart-plot-analytics);
+}
+
+.chart-plot--sm {
+  height: var(--chart-plot-sm);
+}
+
+.chart-plot--md {
+  height: var(--chart-plot-md);
+}
+
+.chart-plot--lg {
+  height: var(--chart-plot-lg);
+}
+
+.chart-plot .recharts-responsive-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.analytics-globe-row {
+  align-items: stretch;
+}
+
+.globe-module-cell {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .globe-module-cell {
+    height: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .globe-module-cell {
+    min-height: clamp(300px, 45vh, 480px);
   }
 }
 
@@ -41,6 +103,27 @@
     scrollbar-width: thin;
     scrollbar-color: #d1d5db transparent;
   }
+
+  .filter-bar-scroll::before,
+  .filter-bar-scroll::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .filter-bar-scroll::before {
+    left: 0;
+    background: linear-gradient(to right, #fff 20%, transparent);
+  }
+
+  .filter-bar-scroll::after {
+    right: 0;
+    background: linear-gradient(to left, #fff 20%, transparent);
+  }
 }
 
 .globe-legend-dot--low {
@@ -55,10 +138,43 @@
   background-color: #15803d;
 }
 
+.performance-legend-swatch--2025 {
+  background-color: #2563eb;
+}
+
+.performance-legend-swatch--2024 {
+  background-color: #ff5c75;
+}
+
+.performance-legend-swatch--2023 {
+  background-color: #a855f7;
+}
+
+.performance-legend-swatch--2022 {
+  background-color: #14b8a6;
+}
+
+.performance-legend-swatch--2021 {
+  background-color: #f59e0b;
+}
+
+.salesman-legend-swatch--ft20 {
+  background-color: #3b82f6;
+}
+
+.salesman-legend-swatch--ft40 {
+  background-color: #ff5c75;
+}
+
 .analytics-chart-block .recharts-wrapper,
 .analytics-chart-block .recharts-surface,
 .analytics-chart-block .recharts-responsive-container {
   margin-bottom: 0 !important;
+}
+
+.analytics-chart-block .recharts-wrapper,
+.analytics-chart-block .recharts-surface {
+  overflow: visible !important;
 }
 
 /* KPI mini charts: Recharts ships with a white canvas */
@@ -68,28 +184,26 @@
   background-color: transparent !important;
 }
 
-.google-style-map {
+.google-maps-view,
+.google-maps-embed {
   background: #e8f0f8;
+  z-index: 0;
+  height: 100% !important;
+  max-height: 100%;
+  width: 100%;
+}
+
+/* Keep custom port highlights above the map embed */
+.google-maps-view .google-maps-embed {
   z-index: 0;
 }
 
-.google-style-map .leaflet-control-zoom {
-  border: none !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18) !important;
+.google-maps-view .google-map-marker {
+  z-index: 2;
 }
 
-.google-style-map .leaflet-control-zoom a {
-  width: 30px !important;
-  height: 30px !important;
-  line-height: 30px !important;
-  color: #5f6368 !important;
-  background: #fff !important;
-  border-bottom: 1px solid #e0e0e0 !important;
-}
-
-.google-style-map .leaflet-control-attribution {
-  font-size: 10px;
-  background: rgba(255, 255, 255, 0.85) !important;
+.google-globe-view {
+  max-height: 100%;
 }
 
 .google-map-marker {
@@ -98,12 +212,41 @@
   height: calc(var(--marker-size) * 2.8);
 }
 
+.google-map-marker__glow {
+  position: absolute;
+  inset: -40%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--marker-color) 0%, transparent 70%);
+  opacity: 0.35;
+}
+
 .google-map-marker__ring {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
   background: var(--marker-color);
   opacity: 0.22;
+}
+
+.google-map-marker__ring--pulse {
+  animation: map-marker-pulse 2.4s ease-out infinite;
+}
+
+@keyframes map-marker-pulse {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.45;
+  }
+
+  70% {
+    transform: scale(1.35);
+    opacity: 0.08;
+  }
+
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
 }
 
 .google-map-marker__dot {
@@ -137,8 +280,15 @@
 /* Google Maps 3D globe — blue sky gradient background */
 .google-globe-view {
   background: linear-gradient(180deg, #3d7cb5 0%, #5a9fd4 42%, #7eb8e3 100%);
+  isolation: isolate;
+}
+
+.google-globe-view > div {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .google-globe-view canvas {
+  display: block;
   filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.12));
 }

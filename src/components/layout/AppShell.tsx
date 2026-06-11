@@ -1,7 +1,7 @@
 "use client";
 
 import { FilterProvider } from "@/context/FilterContext";
-import { SidebarProvider, useSidebar } from "@/context/SidebarContext";
+import { SidebarProvider } from "@/context/SidebarContext";
 import { Sidebar } from "./Sidebar";
 
 type AppShellProps = {
@@ -9,15 +9,9 @@ type AppShellProps = {
 };
 
 function MainContent({ children }: { children: React.ReactNode }) {
-  const { collapsed } = useSidebar();
-
   return (
-    <div
-      className={`min-h-screen pt-14 transition-[padding-left] duration-300 ease-in-out lg:pt-0 ${
-        collapsed ? "lg:pl-[72px]" : "lg:pl-[272px]"
-      }`}
-    >
-      <main className="p-4 md:p-6">{children}</main>
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+      <main className="w-full min-w-0 flex-1 lg:p-2">{children}</main>
     </div>
   );
 }
@@ -26,9 +20,11 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <FilterProvider>
       <SidebarProvider>
-        <div className="min-h-screen bg-dashboard-bg">
-          <Sidebar />
-          <MainContent>{children}</MainContent>
+        <div className="min-h-screen w-full bg-dashboard-bg">
+          <div className="flex min-h-screen flex-col p-2.5 pt-14 lg:flex-row lg:gap-2.5 lg:p-2.5 lg:pt-2.5">
+            <Sidebar />
+            <MainContent>{children}</MainContent>
+          </div>
         </div>
       </SidebarProvider>
     </FilterProvider>

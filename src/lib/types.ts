@@ -47,10 +47,23 @@ export type MonthlyPerformance = {
   teu: number;
 };
 
+export type YearlyMonthPerformance = {
+  month: string;
+  y2021: number;
+  y2022: number;
+  y2023: number;
+  y2024: number;
+  y2025: number;
+};
+
+export type PerformanceMetric = "teu" | "ft20" | "ft40";
+
 export type SalesmanComparison = {
   salesman: string;
+  ft20: number;
+  ft40: number;
+  /** TEU share (0–100) for the overlay line */
   teu: number;
-  performance: number;
 };
 
 export type BLCount = {

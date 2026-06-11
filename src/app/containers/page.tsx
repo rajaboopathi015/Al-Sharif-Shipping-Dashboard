@@ -1,11 +1,12 @@
 import { AppShell } from "@/components/layout/AppShell";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Box } from "lucide-react";
 
 export default function ContainersPage() {
   return (
     <AppShell>
-      <div className="mx-auto max-w-[1440px]">
+      <PageContainer>
         <PageHeader title="Containers" currentPage="Containers" showFilters={false} />
         <div className="flex flex-col items-center justify-center rounded-card border border-dashboard-border bg-white py-24 shadow-card">
           <Box className="mb-4 h-12 w-12 text-blue-500" />
@@ -14,7 +15,7 @@ export default function ContainersPage() {
             Container inventory module — coming soon
           </p>
         </div>
-      </div>
+      </PageContainer>
     </AppShell>
   );
 }

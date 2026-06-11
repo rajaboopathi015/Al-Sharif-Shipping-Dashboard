@@ -12,19 +12,19 @@ const GlobeVisualization = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full min-h-0 items-center justify-center rounded-xl bg-[#e8f0f8]">
+      <div className="flex h-full min-h-0 items-center justify-center rounded bg-[#e8f0f8]">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-400 border-t-transparent" />
       </div>
     ),
   },
 );
 
-const GoogleStyleMapView = dynamic(
-  () => import("./GoogleStyleMapView").then((m) => m.GoogleStyleMapView),
+const GoogleMapView = dynamic(
+  () => import("./GoogleMapView").then((m) => m.GoogleMapView),
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full min-h-0 items-center justify-center rounded-xl bg-[#e8f0f8]">
+      <div className="flex h-full min-h-0 items-center justify-center rounded bg-[#e8f0f8]">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-400 border-t-transparent" />
       </div>
     ),
@@ -73,8 +73,9 @@ export function GlobeModule() {
       showToolbar={false}
       hideHeader
       compact
+      fill
       delay={460}
-      className="flex h-full w-full min-h-0 flex-col !bg-gradient-to-br from-[#eef6fc] to-[#f8fbfe]"
+      className="min-h-0 w-full flex-1 overflow-hidden !bg-gradient-to-br from-[#eef6fc] to-[#f8fbfe]"
     >
       {!widgetsHidden && (
         <div className="mb-2 flex flex-wrap justify-between gap-3">
@@ -173,13 +174,13 @@ export function GlobeModule() {
         </button>
       )}
 
-      <div className="relative min-h-0 flex-1">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         {viewMode === "map" ? (
-          <GoogleStyleMapView
+          <GoogleMapView
             points={globePoints}
             showVolume={showVolume}
             onHover={handleHover}
-            className="h-full"
+            className="absolute inset-0"
           />
         ) : (
           <GlobeVisualization
@@ -187,7 +188,7 @@ export function GlobeModule() {
             showVolume={showVolume}
             rotationEnabled={rotationEnabled}
             onHover={handleHover}
-            className="h-full"
+            className="absolute inset-0"
           />
         )}
 

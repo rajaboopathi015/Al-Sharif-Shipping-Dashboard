@@ -4,8 +4,10 @@ import type {
   GlobePoint,
   LineComparison,
   MonthlyPerformance,
+  PerformanceMetric,
   SalesmanComparison,
   YearComparison,
+  YearlyMonthPerformance,
 } from "./types";
 
 export const filterOptions = {
@@ -81,15 +83,18 @@ export const lineWiseData: LineComparison[] = [
   { line: "Line 10", ft20: 32, ft40: 38, teu: 32 },
 ];
 
+/** Major shipping ports & harbours — map/globe highlight locations */
 export const globePoints: GlobePoint[] = [
-  { lat: 20.5937, lng: 78.9629, name: "India", volume: 125000, intensity: "high" },
-  { lat: 35.8617, lng: 104.1954, name: "China", volume: 198000, intensity: "high" },
-  { lat: 35.9078, lng: 127.7669, name: "Korea", volume: 87000, intensity: "medium" },
-  { lat: -25.2744, lng: 133.7751, name: "Australia", volume: 54000, intensity: "medium" },
-  { lat: 51.1657, lng: 10.4515, name: "Europe", volume: 156000, intensity: "high" },
-  { lat: 1.3521, lng: 103.8198, name: "Singapore", volume: 72000, intensity: "medium" },
-  { lat: 25.2048, lng: 55.2708, name: "UAE", volume: 48000, intensity: "low" },
-  { lat: 23.6345, lng: -102.5528, name: "Mexico", volume: 35000, intensity: "low" },
+  { lat: 18.9497, lng: 72.9512, name: "Jawaharlal Nehru Port (Nhava Sheva)", volume: 125000, intensity: "high" },
+  { lat: 31.355, lng: 121.588, name: "Port of Shanghai", volume: 198000, intensity: "high" },
+  { lat: 35.079, lng: 129.075, name: "Port of Busan", volume: 87000, intensity: "medium" },
+  { lat: -37.841, lng: 144.946, name: "Port of Melbourne", volume: 54000, intensity: "medium" },
+  { lat: 51.9496, lng: 4.1453, name: "Port of Rotterdam", volume: 156000, intensity: "high" },
+  { lat: 1.2644, lng: 103.82, name: "Port of Singapore (PSA)", volume: 72000, intensity: "medium" },
+  { lat: 25.0025, lng: 55.1081, name: "Jebel Ali Port", volume: 48000, intensity: "low" },
+  { lat: 6.9497, lng: 79.8428, name: "Port of Colombo", volume: 62000, intensity: "medium" },
+  { lat: 2.9998, lng: 101.392, name: "Port Klang", volume: 58000, intensity: "medium" },
+  { lat: 19.0534, lng: -104.3188, name: "Port of Manzanillo", volume: 35000, intensity: "low" },
 ];
 
 export const customerData: CustomerComparison[] = [
@@ -107,46 +112,69 @@ export const customerData: CustomerComparison[] = [
 ];
 
 export const monthlyPerformance: MonthlyPerformance[] = [
-  { month: "Jan", ft20: 24, ft40: 34, teu: 41 },
-  { month: "Feb", ft20: 26, ft40: 36, teu: 44 },
-  { month: "Mar", ft20: 28, ft40: 38, teu: 47 },
-  { month: "Apr", ft20: 27, ft40: 37, teu: 45 },
-  { month: "May", ft20: 29, ft40: 40, teu: 49 },
-  { month: "Jun", ft20: 31, ft40: 42, teu: 52 },
-  { month: "Jul", ft20: 30, ft40: 41, teu: 50 },
-  { month: "Aug", ft20: 32, ft40: 44, teu: 54 },
-  { month: "Sep", ft20: 33, ft40: 45, teu: 55 },
-  { month: "Oct", ft20: 34, ft40: 46, teu: 57 },
-  { month: "Nov", ft20: 35, ft40: 48, teu: 59 },
-  { month: "Dec", ft20: 36, ft40: 50, teu: 62 },
+  { month: "Jan", ft20: 15, ft40: 32, teu: 90 },
+  { month: "Feb", ft20: 18, ft40: 35, teu: 60 },
+  { month: "Mar", ft20: 20, ft40: 38, teu: 55 },
+  { month: "Apr", ft20: 19, ft40: 36, teu: 58 },
+  { month: "May", ft20: 22, ft40: 40, teu: 62 },
+  { month: "Jun", ft20: 24, ft40: 42, teu: 65 },
+  { month: "Jul", ft20: 21, ft40: 39, teu: 52 },
+  { month: "Aug", ft20: 23, ft40: 41, teu: 68 },
+  { month: "Sep", ft20: 25, ft40: 43, teu: 72 },
+  { month: "Oct", ft20: 22, ft40: 40, teu: 64 },
+  { month: "Nov", ft20: 20, ft40: 38, teu: 58 },
+  { month: "Dec", ft20: 24, ft40: 44, teu: 70 },
 ];
 
+const yearFactors = {
+  y2021: 0.72,
+  y2022: 0.8,
+  y2023: 0.88,
+  y2024: 0.94,
+  y2025: 1,
+} as const;
+
+function buildYearlyPerformance(metric: PerformanceMetric): YearlyMonthPerformance[] {
+  return monthlyPerformance.map((row) => ({
+    month: row.month,
+    y2021: Math.round(row[metric] * yearFactors.y2021),
+    y2022: Math.round(row[metric] * yearFactors.y2022),
+    y2023: Math.round(row[metric] * yearFactors.y2023),
+    y2024: Math.round(row[metric] * yearFactors.y2024),
+    y2025: Math.round(row[metric] * yearFactors.y2025),
+  }));
+}
+
+export const yearlyTeuPerformance = buildYearlyPerformance("teu");
+export const yearlyFt20Performance = buildYearlyPerformance("ft20");
+export const yearlyFt40Performance = buildYearlyPerformance("ft40");
+
 export const salesmanData: SalesmanComparison[] = [
-  { salesman: "SM-1", teu: 68, performance: 92 },
-  { salesman: "SM-2", teu: 62, performance: 88 },
-  { salesman: "SM-3", teu: 58, performance: 85 },
-  { salesman: "SM-4", teu: 54, performance: 82 },
-  { salesman: "SM-5", teu: 50, performance: 78 },
-  { salesman: "SM-6", teu: 46, performance: 75 },
-  { salesman: "SM-7", teu: 42, performance: 72 },
-  { salesman: "SM-8", teu: 38, performance: 68 },
-  { salesman: "SM-9", teu: 34, performance: 65 },
-  { salesman: "SM-10", teu: 30, performance: 62 },
+  { salesman: "SM-1", ft20: 62, ft40: 78, teu: 92 },
+  { salesman: "SM-2", ft20: 55, ft40: 68, teu: 84 },
+  { salesman: "SM-3", ft20: 48, ft40: 62, teu: 76 },
+  { salesman: "SM-4", ft20: 44, ft40: 56, teu: 70 },
+  { salesman: "SM-5", ft20: 40, ft40: 52, teu: 64 },
+  { salesman: "SM-6", ft20: 36, ft40: 46, teu: 58 },
+  { salesman: "SM-7", ft20: 32, ft40: 42, teu: 52 },
+  { salesman: "SM-8", ft20: 28, ft40: 36, teu: 46 },
+  { salesman: "SM-9", ft20: 24, ft40: 32, teu: 40 },
+  { salesman: "Others", ft20: 38, ft40: 50, teu: 56 },
 ];
 
 export const blCountData: BLCount[] = [
-  { month: "Jan", import: 420, export: 580 },
-  { month: "Feb", import: 445, export: 610 },
-  { month: "Mar", import: 480, export: 640 },
-  { month: "Apr", import: 460, export: 620 },
-  { month: "May", import: 495, export: 655 },
-  { month: "Jun", import: 520, export: 680 },
-  { month: "Jul", import: 510, export: 670 },
-  { month: "Aug", import: 535, export: 695 },
-  { month: "Sep", import: 550, export: 710 },
-  { month: "Oct", import: 565, export: 725 },
-  { month: "Nov", import: 580, export: 740 },
-  { month: "Dec", import: 600, export: 760 },
+  { month: "Jan", import: 12, export: 50 },
+  { month: "Feb", import: 18, export: 44 },
+  { month: "Mar", import: 22, export: 52 },
+  { month: "Apr", import: 28, export: 46 },
+  { month: "May", import: 32, export: 58 },
+  { month: "Jun", import: 38, export: 48 },
+  { month: "Jul", import: 42, export: 62 },
+  { month: "Aug", import: 48, export: 54 },
+  { month: "Sep", import: 50, export: 68 },
+  { month: "Oct", import: 44, export: 56 },
+  { month: "Nov", import: 52, export: 72 },
+  { month: "Dec", import: 58, export: 64 },
 ];
 
 export const intensityColor: Record<GlobePoint["intensity"], string> = {

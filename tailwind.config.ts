@@ -18,8 +18,8 @@ const config: Config = {
         },
       },
       borderRadius: {
-        card: "14px",
-        kpi: "16px",
+        card: "4px",
+        kpi: "4px",
       },
       boxShadow: {
         card: "0 6px 18px rgba(0,0,0,0.06)",

@@ -1,10 +1,21 @@
-/** Default view from Google Maps: @5.2914082,95.9531734,4z */
-export const MAP_DEFAULT_CENTER = { lat: 5.2914082, lng: 95.9531734 };
-export const MAP_DEFAULT_ZOOM = 4;
+import {
+  GOOGLE_EARTH_VIEW,
+  googleEarthDistanceToGoogleMapsZoom,
+} from "./googleEarthView";
 
-/** Carto Voyager — clean vector-style tiles similar to Google Maps */
-export const MAP_TILE_URL =
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+/** Google Maps / Earth camera — Red Sea / Middle East, wide regional view */
+export const MAP_DEFAULT_CENTER = {
+  lat: GOOGLE_EARTH_VIEW.lat,
+  lng: GOOGLE_EARTH_VIEW.lng,
+};
 
-export const MAP_TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+export const MAP_DEFAULT_ZOOM = googleEarthDistanceToGoogleMapsZoom(
+  GOOGLE_EARTH_VIEW.cameraDistanceMeters,
+  GOOGLE_EARTH_VIEW.lat,
+);
+
+export const GOOGLE_MAPS_API_KEY =
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
+
+/** Public embed fallback — ll=center only (no red pin from q= place marker) */
+export const GOOGLE_MAPS_EMBED_URL = `https://maps.google.com/maps?ll=${GOOGLE_EARTH_VIEW.lat},${GOOGLE_EARTH_VIEW.lng}&z=${MAP_DEFAULT_ZOOM}&t=k&output=embed`;

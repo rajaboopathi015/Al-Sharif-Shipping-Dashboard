@@ -11,6 +11,7 @@ type ChartCardProps = {
   showToolbar?: boolean;
   compact?: boolean;
   hideHeader?: boolean;
+  fill?: boolean;
 };
 
 export function ChartCard({
@@ -23,10 +24,11 @@ export function ChartCard({
   showToolbar = true,
   compact = false,
   hideHeader = false,
+  fill = false,
 }: ChartCardProps) {
   return (
     <div
-      className={`animate-fade-lift rounded-card border border-dashboard-border bg-white shadow-card ${compact ? "p-3" : "p-5"} ${className}`}
+      className={`animate-fade-lift rounded-card border border-dashboard-border bg-white shadow-card ${compact ? "p-2" : "p-3"} ${fill ? "flex h-full min-h-0 flex-col" : ""} ${className}`}
       style={{ animationDelay: `${delay}ms` }}
     >
       {!hideHeader && (

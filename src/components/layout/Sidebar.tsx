@@ -53,9 +53,11 @@ export function Sidebar() {
       )}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-[272px] flex-col overflow-hidden rounded-r-[20px] border-r border-dashboard-border bg-white shadow-card transition-[width] duration-300 ease-in-out lg:translate-x-0 ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        } ${!mobileOpen && collapsed ? "lg:w-[72px]" : "lg:w-[272px]"}`}
+        className={`fixed left-0 top-0 z-50 flex h-screen w-[272px] flex-col overflow-hidden rounded-r-[20px] border-r border-dashboard-border bg-white shadow-card transition-[width] duration-300 ease-in-out ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:relative lg:translate-x-0 lg:shrink-0 lg:self-start lg:overflow-visible lg:rounded-[20px] lg:border lg:border-dashboard-border lg:shadow-[0_8px_32px_rgba(15,23,42,0.08)] lg:sticky lg:top-2.5 lg:h-[calc(100vh-20px)] ${
+          !mobileOpen && collapsed ? "lg:w-[72px]" : "lg:w-[272px]"
+        }`}
       >
         <button
           type="button"
@@ -68,7 +70,7 @@ export function Sidebar() {
 
         {/* Header */}
         <div
-          className={`shrink-0 px-4 pt-5 pb-3 ${isExpanded ? "" : "flex flex-col items-center"}`}
+          className={`shrink-0 pt-5 pb-3 ${isExpanded ? "px-4" : "flex flex-col items-center px-0"}`}
         >
           <AlSharifLogo collapsed={!isExpanded} />
 
@@ -85,15 +87,15 @@ export function Sidebar() {
               </button>
             </div>
           ) : (
-            <div className="mt-3 flex w-full flex-col items-center gap-3">
-              <div className="h-px w-10 bg-[#E5E7EB]" />
+            <div className="relative mt-3 flex w-full items-center justify-center">
+              <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#E5E7EB]" />
               <button
                 type="button"
                 onClick={toggleCollapsed}
-                className="hidden h-7 w-7 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#9CA3AF] transition hover:border-[#D1D5DB] hover:text-[#6B7280] lg:flex"
+                className="relative z-10 hidden h-7 w-7 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#9CA3AF] transition hover:border-[#D1D5DB] hover:text-[#6B7280] lg:flex"
                 aria-label="Expand sidebar"
               >
-                <ChevronRight className="h-3.5 w-3.5" />
+                <ChevronRight className="h-4 w-4" />
               </button>
             </div>
           )}
