@@ -57,7 +57,7 @@ const navyBtn =
   "rounded-lg bg-[#3B4B6B] px-3 py-1.5 text-xs font-medium text-white transition hover:bg-[#2f3d57]";
 
 export function GlobeModule() {
-  const [viewMode, setViewMode] = useState<"globe" | "map">("map");
+  const [viewMode, setViewMode] = useState<"globe" | "map">("globe");
   const [showVolume, setShowVolume] = useState(false);
   const [rotationEnabled, setRotationEnabled] = useState(true);
   const [widgetsHidden, setWidgetsHidden] = useState(false);
@@ -84,18 +84,6 @@ export function GlobeModule() {
               <div className="flex rounded-lg border border-blue-100 bg-white p-0.5 shadow-sm">
                 <button
                   type="button"
-                  onClick={() => setViewMode("map")}
-                  className={`flex items-center gap-1 rounded-md px-3 py-1.5 text-xs font-medium transition ${
-                    viewMode === "map"
-                      ? "bg-[#2563EB] text-white shadow-sm"
-                      : "text-dashboard-secondary hover:text-dashboard-primary"
-                  }`}
-                >
-                  <Map className="h-3.5 w-3.5" />
-                  Map
-                </button>
-                <button
-                  type="button"
                   onClick={() => setViewMode("globe")}
                   className={`flex items-center gap-1 rounded-md px-3 py-1.5 text-xs font-medium transition ${
                     viewMode === "globe"
@@ -105,6 +93,18 @@ export function GlobeModule() {
                 >
                   <Globe className="h-3.5 w-3.5" />
                   Globe
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("map")}
+                  className={`flex items-center gap-1 rounded-md px-3 py-1.5 text-xs font-medium transition ${
+                    viewMode === "map"
+                      ? "bg-[#2563EB] text-white shadow-sm"
+                      : "text-dashboard-secondary hover:text-dashboard-primary"
+                  }`}
+                >
+                  <Map className="h-3.5 w-3.5" />
+                  Map
                 </button>
               </div>
               <button type="button" onClick={() => setWidgetsHidden(true)} className={navyBtn}>
