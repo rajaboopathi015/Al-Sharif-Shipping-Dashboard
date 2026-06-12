@@ -13,7 +13,6 @@ import { useFilters } from "@/context/FilterContext";
 import { kpiData } from "@/lib/mockData";
 import {
   KPI_BAR_MARGIN,
-  KPI_CHART_HEIGHT,
   kpiBadge,
   kpiCardShell,
   kpiChartCol,
@@ -22,8 +21,7 @@ import {
   kpiMuted,
   kpiTitle,
   kpiValue,
-  kpiXAxisLine,
-  kpiXAxisTick,
+  kpiXAxisProps,
 } from "./kpiCardStyles";
 
 const HIGHLIGHT_COLOR = "#2DD4BF";
@@ -81,7 +79,7 @@ export function Ft20KpiCard() {
         </div>
       </div>
       <div className={kpiChartCol}>
-        <ResponsiveContainer width="100%" height={KPI_CHART_HEIGHT}>
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
             margin={KPI_BAR_MARGIN}
@@ -89,14 +87,7 @@ export function Ft20KpiCard() {
             style={{ background: "transparent" }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.25)" vertical={false} />
-            <XAxis
-              dataKey="year"
-              axisLine={kpiXAxisLine}
-              tickLine={false}
-              tick={kpiXAxisTick}
-              interval={0}
-              height={18}
-            />
+            <XAxis {...kpiXAxisProps} />
             <YAxis
               axisLine={{ stroke: "rgba(255,255,255,0.25)" }}
               tickLine={false}
@@ -106,7 +97,7 @@ export function Ft20KpiCard() {
               tickFormatter={(v) => (v === 0 ? "0" : `${v / 1000}k`)}
               width={24}
             />
-            <Bar dataKey="value" radius={[3, 3, 0, 0]} maxBarSize={18}>
+            <Bar dataKey="value" radius={[3, 3, 0, 0]} maxBarSize={22}>
               {chartData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={index === 0 ? HIGHLIGHT_COLOR : BAR_COLOR} />
               ))}

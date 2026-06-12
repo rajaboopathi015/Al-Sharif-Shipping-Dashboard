@@ -13,7 +13,6 @@ import { useFilters } from "@/context/FilterContext";
 import { kpiData } from "@/lib/mockData";
 import {
   KPI_AREA_MARGIN,
-  KPI_CHART_HEIGHT,
   kpiCardShell,
   kpiChartCol,
   kpiIconWrap,
@@ -21,11 +20,10 @@ import {
   kpiMuted,
   kpiTitle,
   kpiValue,
-  kpiXAxisLine,
+  kpiXAxisProps,
 } from "./kpiCardStyles";
 
 const CHART_LINE = "#448AFF";
-const FT40_X_TICK = { fontSize: 9, fill: "rgba(255,255,255,0.95)", fontWeight: 500 as const };
 
 export function Ft40KpiCard() {
   const { filters } = useFilters();
@@ -62,7 +60,7 @@ export function Ft40KpiCard() {
         </div>
       </div>
       <div className={kpiChartCol}>
-        <ResponsiveContainer width="100%" height={KPI_CHART_HEIGHT}>
+        <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}
             margin={KPI_AREA_MARGIN}
@@ -80,15 +78,7 @@ export function Ft40KpiCard() {
               horizontal={false}
               vertical
             />
-            <XAxis
-              dataKey="year"
-              axisLine={kpiXAxisLine}
-              tickLine={false}
-              tick={FT40_X_TICK}
-              interval={0}
-              minTickGap={0}
-              height={18}
-            />
+            <XAxis {...kpiXAxisProps} />
             <YAxis
               domain={["dataMin - 300", "dataMax + 300"]}
               axisLine={{ stroke: "rgba(255,255,255,0.55)", strokeWidth: 1 }}

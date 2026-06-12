@@ -177,11 +177,23 @@
   overflow: visible !important;
 }
 
-/* KPI mini charts: Recharts ships with a white canvas */
-.kpi-chart-area .recharts-wrapper,
-.kpi-chart-area .recharts-surface,
+/* KPI mini charts: fill card height, transparent canvas */
 .kpi-chart-area .recharts-responsive-container {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100% !important;
   background-color: transparent !important;
+}
+
+.kpi-chart-area .recharts-wrapper,
+.kpi-chart-area .recharts-surface {
+  background-color: transparent !important;
+}
+
+.kpi-chart-area .recharts-xAxis .recharts-cartesian-axis-tick text {
+  fill: #ffffff !important;
+  font-size: 8px;
+  font-weight: 500;
 }
 
 .google-maps-view,

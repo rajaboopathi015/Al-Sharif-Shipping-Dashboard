@@ -17,14 +17,27 @@ export const kpiBadge =
 export const kpiMuted = "text-[10px] text-white/70";
 
 export const kpiChartCol =
-  "kpi-chart-area flex min-h-0 min-w-0 flex-1 flex-col justify-end bg-transparent py-1 pr-2 pb-1.5 pt-1";
+  "kpi-chart-area flex h-full min-h-0 min-w-0 flex-1 flex-col self-stretch bg-transparent py-1 pr-1.5";
 
-export const KPI_CHART_HEIGHT = 100;
+export const KPI_BAR_MARGIN = { top: 8, right: 0, left: -4, bottom: 14 };
 
-export const KPI_BAR_MARGIN = { top: 4, right: 2, left: -14, bottom: 16 };
+export const KPI_AREA_MARGIN = { top: 8, right: 0, left: 0, bottom: 14 };
 
-export const KPI_AREA_MARGIN = { top: 6, right: 4, left: 0, bottom: 16 };
+export const kpiXAxisTick = {
+  fontSize: 8,
+  fill: "#FFFFFF",
+  fontWeight: 500,
+};
 
-export const kpiXAxisTick = { fontSize: 9, fill: "rgba(255,255,255,0.9)" };
+export const kpiXAxisLine = { stroke: "rgba(255,255,255,0.5)" };
 
-export const kpiXAxisLine = { stroke: "rgba(255,255,255,0.35)" };
+export const kpiXAxisProps = {
+  dataKey: "year",
+  axisLine: kpiXAxisLine,
+  tickLine: false,
+  tick: kpiXAxisTick,
+  interval: 0,
+  height: 16,
+  tickMargin: 2,
+  minTickGap: 0,
+} as const;
